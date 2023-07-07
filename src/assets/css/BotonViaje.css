@@ -1,0 +1,24 @@
+.logoViaje{
+    width: 9em;
+    height: 9em;
+    border-radius:40%;
+}
+.logoViajeParar{
+    width: 9em;
+    height: 9em;
+    border-radius:40%;
+}
+
+.Iniciar {
+    border: 0.4em solid #a0d755;
+}
+.Parar{
+    border: 0.4em solid #fb4455;
+}
+
+.botonViaje{
+    padding:1em;
+    background-color:white;
+    border-radius:50%;
+    box-shadow: 10px 5px 5px #d1cfcf;
+}
