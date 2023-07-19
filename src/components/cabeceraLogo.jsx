@@ -2,9 +2,11 @@ import React,{useState} from 'react'
 import PropTypes from 'prop-types'
 import {Container,Row,Col,Button,Form} from 'react-bootstrap';
 import {useNavigate,NavLink} from "react-router-dom"
-import { BiBusSchool,BiUser } from "react-icons/bi";
+import { BiHistory,BiCalendarCheck,BiCog } from "react-icons/bi";
+import LogoValurq from '../assets/logoSF.png'
 
-const MenuInferior = (props) => {
+
+const CabeceraLogo = (props) => {
     const base = {"historial":"","hora":"","config":""};
     const [dir,setDir] = useState({"historial":"","hora":"","config":""});
     const cambiar = (direccion)=>{
@@ -20,20 +22,12 @@ const MenuInferior = (props) => {
     */
     return (
         <Container fluid style={{padding:"0px",justifyContent: "center",backgroundColor:'white'}} >
-            <Row style={{width:"100%",justifyContent:"center"}} id="opciones">
-                <Col xs={4}>
-                    <NavLink to={`/viajeReg`}>
-                            <h2><BiBusSchool/></h2>
-                            Viaje
-                    </NavLink>
+            <Row style={{width:"100%",justifyContent:"center",backgroundColor:"#005285",padding:"8px"}} id="opciones">
+                <Col xs={1} >
+                    <img src={LogoValurq} style={{height:'2em'}} />
                 </Col>
-                <Col xs={4}>
-                    <NavLink to={`/perfil`}>
-
-                        <h2><BiUser/></h2>
-                        Perfil
-                    </NavLink>
-
+                <Col xs={11} >
+                    <h3 style={{color:"white"}}>Monitoreo Logistica</h3>
                 </Col>
             </Row>
 
@@ -41,4 +35,4 @@ const MenuInferior = (props) => {
     )
 }
 
-export default MenuInferior;
+export default CabeceraLogo;
