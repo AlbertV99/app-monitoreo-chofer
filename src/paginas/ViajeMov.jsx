@@ -62,7 +62,7 @@ const ViajeMov = (props) => {
 
     const pulsarEnvios = ()=>{
         if(!pulsar){//comenzar pulsaciones
-            setIntervalo(setInterval(pulsaciones,6000)) // milisegundos
+            setIntervalo(setInterval(pulsaciones,120000)) // milisegundos
         }else{//parar pulsaciones
             clearInterval(intervalo);
             setIntervalo(null)
