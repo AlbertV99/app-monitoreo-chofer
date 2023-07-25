@@ -4,6 +4,7 @@ import {Container,Navbar,Row,Col,Button,Form,FloatingLabel} from 'react-bootstra
 import {useNavigate,NavLink} from "react-router-dom"
 import MenuInferior from '../components/menuInf'
 import Peticiones from '../helpers/peticiones.js'
+import LocalBD from '../helpers/localBd.js'
 import LogoIniciarViaje from '../assets/enviado.png'
 import LogoPararViaje from '../assets/senal-de-stop.png'
 import '../assets/css/BotonViaje.css'
@@ -14,12 +15,17 @@ const PerfilChofer = (props) => {
     const [datos, setDatos] = useState([]);
     const [msg, setMsg] = useState("");
     const [estadoViaje, setEstadoViaje] = useState(true);
-    const [datoForm,setDatoForm] = useState({"cedula":"","nombre":"","apellido":""});
+    const [datoForm,setDatoForm] = useState({"nro_cedula":"","nombre":"","apellido":""});
     // const [,,,,,,endpointLibre,obtenerPersona,registrarMarcacion,obtenerHistorial] = Peticiones();
 
     const {endpointLibre,obtenerPersona,registrarMarcacion,obtenerHistorial} = Peticiones();
+    const {obtenerChofer} = LocalBD();
     useEffect(() => {
-
+        let temp = obtenerChofer();
+        console.log(temp)
+        if(temp !="99"){
+            setDatoForm( JSON.parse(temp))
+        }
     }, []);
 
     const handleCampos = (event)=>{
@@ -32,8 +38,8 @@ const PerfilChofer = (props) => {
 
     const guardarInfo = async (evento)=>{
         evento.preventDefault();
-        const cedula = evento.target.cedula.value;
-        console.log(cedula)
+        const nro_cedula = evento.target.nro_cedula.value;
+        console.log(nro_cedula)
     }
 
     const logoEstado= ()=>{
@@ -61,7 +67,7 @@ const PerfilChofer = (props) => {
                         </Col>
                         <Col>
                             <FloatingLabel controlId="floatingInput" label="Cédula de Identidad" className="mb-3">
-                                <Form.Control type="text" name="cedula" placeholder="Ingrese cédula" onChange={handleCampos} value={datoForm.cedula} disabled/>
+                                <Form.Control type="text" name="nro_cedula" placeholder="Ingrese cédula" onChange={handleCampos} value={datoForm.nro_cedula} disabled/>
                             </FloatingLabel>
                         </Col>
                         <Col xs={1}>
