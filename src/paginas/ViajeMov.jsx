@@ -101,13 +101,13 @@ const ViajeMov = (props) => {
         console.log(ubicacion)
         console.log(datoViaje)
         const data = {
-            lat:ubicacion.latitud,
-            lon:ubicacion.longitud,
-            id_viaje: datoViaje.id,
+            "lat":ubicacion.latitud,
+            "lon":ubicacion.longitud,
+            "id_viaje": datoViaje.id,
         };
         console.log(data)
-        // Envía la foto y los datos al servidor utilizando fetch
         guardarNuevoJson("/posicion/Parametros/ABMForm.php",data);
+        // Envía la foto y los datos al servidor utilizando fetch
 
     }
 
