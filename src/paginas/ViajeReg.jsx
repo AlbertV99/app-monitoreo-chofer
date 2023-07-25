@@ -52,7 +52,6 @@ const ViajeReg = (props) => {
         temp = await endpointLibre("/cliente/Parametros/consultaValores.php?tipo=lista")
         arrTemp = temp.datos.map((elemento)=>{return {'value':elemento.id,'label':elemento.opcion}})
         setListaCliente(arrTemp)
-
     }
 
     const handleCampos = (event)=>{
