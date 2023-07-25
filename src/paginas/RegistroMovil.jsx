@@ -6,7 +6,7 @@ import Peticiones from '../helpers/peticiones.js'
 import LogoIniciarViaje from '../assets/enviado.png'
 import LogoPararViaje from '../assets/senal-de-stop.png'
 import '../assets/css/BotonViaje.css'
-import { BiUserCircle } from "react-icons/bi";
+import { BiUserCircle } from "react-icons/bi" ;
 
 
 const RegistroMovil = (props) => {
