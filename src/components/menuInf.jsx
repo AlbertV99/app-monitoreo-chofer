@@ -21,13 +21,22 @@ const MenuInferior = (props) => {
     return (
         <Container fluid style={{padding:"0px",justifyContent: "center",backgroundColor:'white'}} >
             <Row style={{width:"100%",justifyContent:"center"}} id="opciones">
+            <Row>
                 <Col xs={4}>
+                </Col>
+                <Col xs={8} style={{padding:'0px',textAlign:'right'}}>
+                    <p style={{fontSize:'8pt',color:'#a2a4a6',margin:'3px 0px'}}>
+                        Desarrollado por : Valurq S.R.L.
+                    </p>
+                </Col>
+            </Row>
+                <Col xs={6}>
                     <NavLink to={`/viajeReg`}>
                             <h2><BiBusSchool/></h2>
                             Viaje
                     </NavLink>
                 </Col>
-                <Col xs={4}>
+                <Col xs={6}>
                     <NavLink to={`/perfil`}>
 
                         <h2><BiUser/></h2>

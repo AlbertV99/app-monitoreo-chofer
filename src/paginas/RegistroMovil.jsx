@@ -13,10 +13,10 @@ const RegistroMovil = (props) => {
     const [datos, setDatos] = useState([]);
     const [msg, setMsg] = useState("");
     const [estadoViaje, setEstadoViaje] = useState(true);
-    const [datoForm,setDatoForm] = useState({"cedula":"","chapa":""});
+    const [datoForm,setDatoForm] = useState({"chapa":"","marca":"","modelo":"","capacidad":""});
     // const [,,,,,,endpointLibre,obtenerPersona,registrarMarcacion,obtenerHistorial] = Peticiones();
 
-    const {endpointLibre,obtenerPersona,registrarMarcacion,obtenerHistorial} = Peticiones();
+    const {endpointLibre,obtenerPersona,registrarMarcacion,obtenerHistorial,guardarNuevoJson} = Peticiones();
     useEffect(() => {
 
     }, []);
@@ -28,93 +28,28 @@ const RegistroMovil = (props) => {
         });
         // console.log(datoForm);
     }
+
     const guardarInfo = async (evento)=>{
         evento.preventDefault();
         const cedula = evento.target.cedula.value;
         console.log(cedula)
-        try {
-            if(cedula =="123456"){
-                localStorage.setItem('persona',JSON.stringify({'cedula':cedula,"nombre":"Invitado","apellido":"Prueba","dsc_cargo":"QA"}));
-                setMsg("Registrado correctamente")
-            }else{
-                let temp = await obtenerPersona(cedula);
-                if(temp.length > 0){
-                    console.log(temp)
-                    temp = temp [0];
-                    setMsg("Registrado correctamente")
-                    localStorage.setItem('persona',JSON.stringify({'cedula':cedula,"nombre":temp.nombres,"apellido":temp.apellidos,"dsc_cargo":temp.dsc_cargo}));
-                }else{
-                    localStorage.setItem('persona',JSON.stringify({}));
-                    setMsg("Usuario no existe en el registro");
-                }
-
-            }
-
-        } catch (e) {
-            console.error(e);
-            setMsg("Ha ocurrido un error, comuniquese con el administrador")
-        } finally {
-
-        }
-
     }
 
     const logoEstado= ()=>{
         return (estadoViaje)?<img src={LogoIniciarViaje} className="logoViaje" /> : <img src={LogoPararViaje} className="logoViaje" /> ;
     }
 
-    const pulsarEnvios = ()=>{
-        /*if(!pulsar){//comenzar pulsaciones
-            // setIntervalo(setInterval(pulsaciones,60000)) // milisegundos
-        }else{//parar pulsaciones
-            clearInterval(intervalo);
-            setIntervalo(null)
+    const enviarDatos = async () => {
+        console.log(datoForm)
+        let respuesta = await guardarNuevoJson('/mov/Parametros/ABMForm.php',datoForm);
+        if(respuesta.cod == "00"){
+            setMsg("Registrado correctamente")
+        }else{
+            setMsg("Error a la hora de registrar movil")
         }
-        setPulso(!pulsar);
-        */
-       console.log(datoForm);
-       setEstadoViaje(!estadoViaje)
+        // REGISTRAR EN LA BD LOCAL EL USUARIO
 
     }
-
-    const pulsaciones = ()=>{
-        geolocalizar();
-        enviarDatos();
-
-    }
-
-    const geolocalizar = async ()=>{
-          navigator.geolocation.getCurrentPosition(
-              (a) => {
-                  console.log(a);
-
-                  setUbicacion({"latitud":a.coords.latitude,"longitud":a.coords.longitude});
-                  setEstadoUbicacion(true);
-              },
-              (error)=>{
-                console.log("No activo la geolocalizacion",error);
-                setEstadoUbicacion(false);
-
-              }
-          )
-    }
-
-    const enviarDatos = (foto="") => {
-        const data = {
-            personal_id: persona.id,
-            documento: persona.cedula,
-            tipo_marcacion :  "E",
-            latitud:ubicacion.latitud,
-            longitud:ubicacion.longitud,
-            photo: foto,
-        };
-        console.log(data)
-        // Envía la foto y los datos al servidor utilizando fetch
-        // guardarNuevoJson("/marcador/Parametros/ABMForm.php?opcion="+"E",data);
-
-    }
-
-
 
     return (
         <>
@@ -171,7 +106,7 @@ const RegistroMovil = (props) => {
                         <Col xs={1}>
                         </Col>
                         <Col>
-                            <Button variant="success" style={{width:"100%"}}>
+                            <Button variant="success" style={{width:"100%"}} onClick={enviarDatos}>
                                 Registrar
                             </Button>
                         </Col>

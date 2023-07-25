@@ -4,6 +4,7 @@ import {Container,Navbar,Row,Col,Button,Form,FloatingLabel} from 'react-bootstra
 import MenuInferior from '../components/menuInf'
 import Peticiones from '../helpers/peticiones.js'
 import LogoIniciarViaje from '../assets/enviado.png'
+import LocalBD from '../helpers/localBd.js'
 import LogoPararViaje from '../assets/senal-de-stop.png'
 import {useNavigate,NavLink} from "react-router-dom"
 import Select from 'react-select';
@@ -12,20 +13,47 @@ import { BiUserCircle } from "react-icons/bi";
 
 
 const ViajeReg = (props) => {
+    const navg = useNavigate()
     const [datos, setDatos] = useState([]);
     const [msg, setMsg] = useState("");
     const [estadoViaje, setEstadoViaje] = useState(true);
-    const [datoForm,setDatoForm] = useState({"cedula":"","chapa":""});
+    const {obtenerChofer,registrarViaje} = LocalBD();
+    const [datoChofer,setDatoChofer] = useState({"nro_cedula":"","nombre":"","apellido":"","id":"0"})
     const [movilSelec,setMovilSelec] = useState("");
     const [listaMovil,setListaMovil] = useState([{ 'label': "ALB 753 - SCANIA", 'value': '1' }]);
     const [clienteSelec,setClienteSelec] = useState("");
     const [listaCliente,setListaCliente] = useState([{ 'label': "A S D SRL", 'value': '1' }]);
+    const [datoForm,setDatoForm] = useState({"id_chofer":1,"id_movil":"","id_cliente":"","destino":"","dt":""});
     // const [,,,,,,endpointLibre,obtenerPersona,registrarMarcacion,obtenerHistorial] = Peticiones();
 
-    const {endpointLibre,obtenerPersona,registrarMarcacion,obtenerHistorial} = Peticiones();
+    const {endpointLibre,obtenerPersona,registrarMarcacion,obtenerHistorial,guardarNuevoJson} = Peticiones();
     useEffect(() => {
-
+        verificarChofer();
+        cargarLista();
     }, []);
+
+    const verificarChofer = ()=>{
+        let chofer = obtenerChofer()
+        console.log(chofer)
+        if(chofer=="99"){
+            //cambiar a registro
+        }else{
+            let temp = JSON.parse(chofer)
+            setDatoChofer(temp);
+            datoForm.id_chofer = temp.id
+        }
+    }
+
+    const cargarLista = async ()=>{
+        let temp = await endpointLibre("/mov/Parametros/consultaValores.php?tipo=lista")
+        console.log(temp.datos)
+        let arrTemp = temp.datos.map((elemento)=>{ return {'value':elemento.id,'label':elemento.opcion} })
+        setListaMovil(arrTemp)
+        temp = await endpointLibre("/cliente/Parametros/consultaValores.php?tipo=lista")
+        arrTemp = temp.datos.map((elemento)=>{return {'value':elemento.id,'label':elemento.opcion}})
+        setListaCliente(arrTemp)
+
+    }
 
     const handleCampos = (event)=>{
         setDatoForm({
@@ -34,87 +62,37 @@ const ViajeReg = (props) => {
         });
         // console.log(datoForm);
     }
+
     const guardarInfo = async (evento)=>{
         evento.preventDefault();
         const cedula = evento.target.cedula.value;
         console.log(cedula)
-        try {
-            if(cedula =="123456"){
-                localStorage.setItem('persona',JSON.stringify({'cedula':cedula,"nombre":"Invitado","apellido":"Prueba","dsc_cargo":"QA"}));
-                setMsg("Registrado correctamente")
-            }else{
-                let temp = await obtenerPersona(cedula);
-                if(temp.length > 0){
-                    console.log(temp)
-                    temp = temp [0];
-                    setMsg("Registrado correctamente")
-                    localStorage.setItem('persona',JSON.stringify({'cedula':cedula,"nombre":temp.nombres,"apellido":temp.apellidos,"dsc_cargo":temp.dsc_cargo}));
-                }else{
-                    localStorage.setItem('persona',JSON.stringify({}));
-                    setMsg("Usuario no existe en el registro");
-                }
-
-            }
-
-        } catch (e) {
-            console.error(e);
-            setMsg("Ha ocurrido un error, comuniquese con el administrador")
-        } finally {
-
-        }
-
     }
 
     const logoEstado= ()=>{
         return (estadoViaje)?<img src={LogoIniciarViaje} className="logoViaje" /> : <img src={LogoPararViaje} className="logoViaje" /> ;
     }
 
-    const pulsarEnvios = ()=>{
-        /*if(!pulsar){//comenzar pulsaciones
-            // setIntervalo(setInterval(pulsaciones,60000)) // milisegundos
-        }else{//parar pulsaciones
-            clearInterval(intervalo);
-            setIntervalo(null)
+    const enviarDatos = async () => {
+        datoForm.id_cliente=clienteSelec.value
+        datoForm.id_movil = movilSelec.value
+        datoForm.estado = 'ACTIVO'
+        console.log(datoForm);
+        let respuesta = await guardarNuevoJson('/viaje/Parametros/ABMForm2.php?opcion=N',datoForm);
+        console.log({"respuesta":respuesta});
+        if(respuesta.cod == "00" || respuesta.cod =="10"){
+            let temp = registrarViaje(respuesta.id);
+            if (temp !="00"){
+                setMsg("Error a la hora de registrar viaje")
+
+            }else{
+                navg("/viajeMov")
+                setMsg("Registrado correctamente")
+            }
+        }else{
+            setMsg("Error a la hora de registrar el viaje")
+
         }
-        setPulso(!pulsar);
-        */
-       console.log(datoForm);
-       setEstadoViaje(!estadoViaje)
-
-    }
-
-    const pulsaciones = ()=>{
-        geolocalizar();
-        enviarDatos();
-
-    }
-
-    const geolocalizar = async ()=>{
-          navigator.geolocation.getCurrentPosition(
-              (a) => {
-                  console.log(a);
-
-                  setUbicacion({"latitud":a.coords.latitude,"longitud":a.coords.longitude});
-                  setEstadoUbicacion(true);
-              },
-              (error)=>{
-                console.log("No activo la geolocalizacion",error);
-                setEstadoUbicacion(false);
-
-              }
-          )
-    }
-
-    const enviarDatos = (foto="") => {
-        const data = {
-            personal_id: persona.id,
-            documento: persona.cedula,
-            tipo_marcacion :  "E",
-            latitud:ubicacion.latitud,
-            longitud:ubicacion.longitud,
-            photo: foto,
-        };
-        console.log(data)
         // Envía la foto y los datos al servidor utilizando fetch
         // guardarNuevoJson("/marcador/Parametros/ABMForm.php?opcion="+"E",data);
 
@@ -130,7 +108,7 @@ const ViajeReg = (props) => {
                         <Col xs={1}>
                         </Col>
                         <Col>
-                            <h5>Alberto Valdez </h5>
+                            <h5>{datoChofer.nombre + " "+ datoChofer.apellido} </h5>
                         </Col>
                         <Col xs={1}>
                         </Col>
@@ -178,7 +156,7 @@ const ViajeReg = (props) => {
                         </Col>
                         <Col>
                             <FloatingLabel controlId="floatingInput" label="Destino" className="mb-3">
-                                <Form.Control type="text" name="cedula" placeholder="Ingrese destino" onChange={handleCampos} value={datoForm.destino}/>
+                                <Form.Control type="text" name="destino" placeholder="Ingrese destino" onChange={handleCampos} value={datoForm.destino}/>
                             </FloatingLabel>
                         </Col>
                         <Col xs={1}>
@@ -189,7 +167,7 @@ const ViajeReg = (props) => {
                         </Col>
                         <Col>
                             <FloatingLabel controlId="floatingInput" label="D.T." className="mb-3">
-                                <Form.Control type="text" name="cedula" placeholder="Ingrese D.T." onChange={handleCampos} value={datoForm.dt}/>
+                                <Form.Control type="text" name="dt" placeholder="Ingrese D.T." onChange={handleCampos} value={datoForm.dt}/>
                             </FloatingLabel>
                         </Col>
                         <Col xs={1}>
@@ -199,11 +177,9 @@ const ViajeReg = (props) => {
                         <Col xs={1}>
                         </Col>
                         <Col>
-                            <NavLink to={`/viajeMov`}>
-                                <Button variant="success" style={{width:"100%"}}>
+                            <Button variant="success" style={{width:"100%"}} onClick={enviarDatos}>
                                     Guardar e Iniciar
-                                </Button>
-                            </NavLink>
+                            </Button>
                         </Col>
                         <Col xs={1}>
                         </Col>

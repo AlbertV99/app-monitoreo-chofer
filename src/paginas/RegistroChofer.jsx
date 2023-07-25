@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import {Container,Navbar,Row,Col,Button,Form,FloatingLabel} from 'react-bootstrap';
 import MenuInferior from '../components/menuInf'
 import Peticiones from '../helpers/peticiones.js'
+import LocalBD from '../helpers/localBd.js'
 import LogoIniciarViaje from '../assets/enviado.png'
 import LogoPararViaje from '../assets/senal-de-stop.png'
 import '../assets/css/BotonViaje.css'
@@ -13,10 +14,10 @@ const RegistroChofer = (props) => {
     const [datos, setDatos] = useState([]);
     const [msg, setMsg] = useState("");
     const [estadoViaje, setEstadoViaje] = useState(true);
-    const [datoForm,setDatoForm] = useState({"cedula":"","chapa":""});
+    const [datoForm,setDatoForm] = useState({"nro_cedula":"","nombre":"","apellido":""});
     // const [,,,,,,endpointLibre,obtenerPersona,registrarMarcacion,obtenerHistorial] = Peticiones();
-
-    const {endpointLibre,obtenerPersona,registrarMarcacion,obtenerHistorial} = Peticiones();
+    const {registrarChofer} = LocalBD();
+    const {endpointLibre,obtenerPersona,registrarMarcacion,obtenerHistorial,guardarNuevoJson} = Peticiones();
     useEffect(() => {
 
     }, []);
@@ -28,87 +29,39 @@ const RegistroChofer = (props) => {
         });
         // console.log(datoForm);
     }
-    const guardarInfo = async (evento)=>{
-        evento.preventDefault();
-        const cedula = evento.target.cedula.value;
-        console.log(cedula)
-        try {
-            if(cedula =="123456"){
-                localStorage.setItem('persona',JSON.stringify({'cedula':cedula,"nombre":"Invitado","apellido":"Prueba","dsc_cargo":"QA"}));
-                setMsg("Registrado correctamente")
-            }else{
-                let temp = await obtenerPersona(cedula);
-                if(temp.length > 0){
-                    console.log(temp)
-                    temp = temp [0];
-                    setMsg("Registrado correctamente")
-                    localStorage.setItem('persona',JSON.stringify({'cedula':cedula,"nombre":temp.nombres,"apellido":temp.apellidos,"dsc_cargo":temp.dsc_cargo}));
-                }else{
-                    localStorage.setItem('persona',JSON.stringify({}));
-                    setMsg("Usuario no existe en el registro");
-                }
-
-            }
-
-        } catch (e) {
-            console.error(e);
-            setMsg("Ha ocurrido un error, comuniquese con el administrador")
-        } finally {
-
-        }
-
-    }
 
     const logoEstado= ()=>{
         return (estadoViaje)?<img src={LogoIniciarViaje} className="logoViaje" /> : <img src={LogoPararViaje} className="logoViaje" /> ;
     }
 
-    const pulsarEnvios = ()=>{
-        /*if(!pulsar){//comenzar pulsaciones
-            // setIntervalo(setInterval(pulsaciones,60000)) // milisegundos
-        }else{//parar pulsaciones
-            clearInterval(intervalo);
-            setIntervalo(null)
+
+    const enviarDatos = async () => {
+        // datoForm.nro_cedula="5031168"
+        // datoForm.nombre="Alberto"
+        // datoForm.apellido="Valdez";
+        datoForm.obs="";
+        console.log(datoForm)
+        let respuesta =await guardarNuevoJson('/chofer/Parametros/ABMForm.php',datoForm);
+        // let respuesta = {cod:"00",msg:"correcto",id:"1"}
+        console.log(respuesta,respuesta.cod)
+        // console.log("Pre Registro")
+        if(respuesta['cod'] == "00" || respuesta =="10"){
+            datoForm.id = respuesta.id
+            // console.log(datoForm,"primer If")
+            let temp = registrarChofer(datoForm);
+            // console.log("despues de registro local")
+
+            if (temp !="00"){
+                setMsg("Error a la hora de registrar chofer")
+
+            }else{
+                setMsg("Registrado correctamente")
+
+            }
+        }else{
+            // console.log("error codigo")
+            setMsg("Error a la hora de registrar chofer")
         }
-        setPulso(!pulsar);
-        */
-       console.log(datoForm);
-       setEstadoViaje(!estadoViaje)
-
-    }
-
-    const pulsaciones = ()=>{
-        geolocalizar();
-        enviarDatos();
-
-    }
-
-    const geolocalizar = async ()=>{
-          navigator.geolocation.getCurrentPosition(
-              (a) => {
-                  console.log(a);
-
-                  setUbicacion({"latitud":a.coords.latitude,"longitud":a.coords.longitude});
-                  setEstadoUbicacion(true);
-              },
-              (error)=>{
-                console.log("No activo la geolocalizacion",error);
-                setEstadoUbicacion(false);
-
-              }
-          )
-    }
-
-    const enviarDatos = (foto="") => {
-        const data = {
-            personal_id: persona.id,
-            documento: persona.cedula,
-            tipo_marcacion :  "E",
-            latitud:ubicacion.latitud,
-            longitud:ubicacion.longitud,
-            photo: foto,
-        };
-        console.log(data)
         // Envía la foto y los datos al servidor utilizando fetch
         // guardarNuevoJson("/marcador/Parametros/ABMForm.php?opcion="+"E",data);
 
@@ -128,7 +81,7 @@ const RegistroChofer = (props) => {
                         </Col>
                         <Col>
                             <FloatingLabel controlId="floatingInput" label="Cédula de Identidad" className="mb-3">
-                                <Form.Control type="text" name="cedula" placeholder="Ingrese cédula" onChange={handleCampos} value={datoForm.cedula}/>
+                                <Form.Control type="text" name="nro_cedula" placeholder="Ingrese cédula" onChange={handleCampos} value={datoForm.nro_cedula}/>
                             </FloatingLabel>
                         </Col>
                         <Col xs={1}>
@@ -160,7 +113,7 @@ const RegistroChofer = (props) => {
                         <Col xs={1}>
                         </Col>
                         <Col>
-                            <Button variant="success" style={{width:"100%"}}>
+                            <Button variant="success" style={{width:"100%"}} onClick={enviarDatos}>
                                 Registrarse
                             </Button>
                         </Col>

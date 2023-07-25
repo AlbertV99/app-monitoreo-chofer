@@ -64,14 +64,14 @@ const ViajeMov = (props) => {
     }
 
     const pulsarEnvios = ()=>{
-        /*if(!pulsar){//comenzar pulsaciones
+        if(!pulsar){//comenzar pulsaciones
             // setIntervalo(setInterval(pulsaciones,60000)) // milisegundos
         }else{//parar pulsaciones
             clearInterval(intervalo);
             setIntervalo(null)
         }
         setPulso(!pulsar);
-        */
+
        console.log(datoForm);
        setEstadoViaje(!estadoViaje)
 
@@ -101,12 +101,9 @@ const ViajeMov = (props) => {
 
     const enviarDatos = (foto="") => {
         const data = {
-            personal_id: persona.id,
-            documento: persona.cedula,
-            tipo_marcacion :  "E",
-            latitud:ubicacion.latitud,
-            longitud:ubicacion.longitud,
-            photo: foto,
+            lat:ubicacion.latitud,
+            lon:ubicacion.longitud,
+            id_viaje: foto,
         };
         console.log(data)
         // Envía la foto y los datos al servidor utilizando fetch
