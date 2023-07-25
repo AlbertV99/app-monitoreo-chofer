@@ -4,6 +4,7 @@ import {Container,Navbar,Row,Col,Button,Form,FloatingLabel} from 'react-bootstra
 import MenuInferior from '../components/menuInf'
 import Peticiones from '../helpers/peticiones.js'
 import LogoIniciarViaje from '../assets/enviado.png'
+import LocalBD from '../helpers/localBd.js'
 import LogoPararViaje from '../assets/senal-de-stop.png'
 import '../assets/css/BotonViaje.css'
 import { BiUserCircle } from "react-icons/bi";
@@ -13,13 +14,36 @@ const ViajeMov = (props) => {
     const [datos, setDatos] = useState([]);
     const [msg, setMsg] = useState("");
     const [estadoViaje, setEstadoViaje] = useState(true);
+    const {obtenerChofer,registrarViaje,obtenerViaje} = LocalBD();
     const [datoForm,setDatoForm] = useState({"cedula":"","chapa":""});
+    const [pulsar,setPulso] = useState(false);
+    const [intervalo,setIntervalo] = useState(null)
+    const [datoViaje,setDatoViaje] = useState({"id":"","chofer":"","movil":""});
     // const [,,,,,,endpointLibre,obtenerPersona,registrarMarcacion,obtenerHistorial] = Peticiones();
 
     const {endpointLibre,obtenerPersona,registrarMarcacion,obtenerHistorial} = Peticiones();
     useEffect(() => {
-
+        let viaje = obtenerViaje()
+        console.log(viaje)
+        if(viaje=="99"){
+            //cambiar a registro
+        }else{
+            let temp = JSON.parse(viaje)
+            setDatoViaje(temp);
+        }
     }, []);
+
+    const verificarChofer = ()=>{
+        let chofer = obtenerChofer()
+        console.log(chofer)
+        if(chofer=="99"){
+            //cambiar a registro
+        }else{
+            let temp = JSON.parse(chofer)
+            setDatoChofer(temp);
+            datoForm.id_chofer = temp.id
+        }
+    }
 
     const handleCampos = (event)=>{
         setDatoForm({
@@ -28,36 +52,7 @@ const ViajeMov = (props) => {
         });
         // console.log(datoForm);
     }
-    const guardarInfo = async (evento)=>{
-        evento.preventDefault();
-        const cedula = evento.target.cedula.value;
-        console.log(cedula)
-        try {
-            if(cedula =="123456"){
-                localStorage.setItem('persona',JSON.stringify({'cedula':cedula,"nombre":"Invitado","apellido":"Prueba","dsc_cargo":"QA"}));
-                setMsg("Registrado correctamente")
-            }else{
-                let temp = await obtenerPersona(cedula);
-                if(temp.length > 0){
-                    console.log(temp)
-                    temp = temp [0];
-                    setMsg("Registrado correctamente")
-                    localStorage.setItem('persona',JSON.stringify({'cedula':cedula,"nombre":temp.nombres,"apellido":temp.apellidos,"dsc_cargo":temp.dsc_cargo}));
-                }else{
-                    localStorage.setItem('persona',JSON.stringify({}));
-                    setMsg("Usuario no existe en el registro");
-                }
 
-            }
-
-        } catch (e) {
-            console.error(e);
-            setMsg("Ha ocurrido un error, comuniquese con el administrador")
-        } finally {
-
-        }
-
-    }
 
     const logoEstado= ()=>{
         return (estadoViaje)?<img src={LogoIniciarViaje} className="logoViaje" /> : <img src={LogoPararViaje} className="logoViaje" /> ;
@@ -124,7 +119,7 @@ const ViajeMov = (props) => {
                         <Col xs={1}>
                         </Col>
                         <Col>
-                            <h3>Viaje X</h3>
+                            <h3>{datoViaje.destino}</h3>
                         </Col>
                         <Col xs={1}>
                         </Col>
@@ -133,7 +128,7 @@ const ViajeMov = (props) => {
                         <Col xs={1}>
                         </Col>
                         <Col>
-                            <p>Alberto Valdez - ALB 754</p>
+                            <p>{datoViaje.chofer}</p>
                         </Col>
                         <Col xs={1}>
                         </Col>
@@ -142,7 +137,7 @@ const ViajeMov = (props) => {
                         <Col xs={1}>
                         </Col>
                         <Col>
-                            <p>A S D SRL</p>
+                            <p>{datoViaje.movil}</p>
                         </Col>
                         <Col xs={1}>
                         </Col>

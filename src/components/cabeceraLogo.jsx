@@ -27,7 +27,7 @@ const CabeceraLogo = (props) => {
                     {/*<img src={LogoValurq} style={{height:'2em'}} />*/}
                 </Col>
                 <Col xs={11} >
-                    <h3 style={{color:"white"}}>Monitoreo Logistica</h3>
+                    <h3 style={{color:"white"}}>Monitoreo Logística</h3>
                 </Col>
             </Row>
 

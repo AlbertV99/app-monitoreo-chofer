@@ -81,7 +81,7 @@ const ViajeReg = (props) => {
         let respuesta = await guardarNuevoJson('/viaje/Parametros/ABMForm2.php?opcion=N',datoForm);
         console.log({"respuesta":respuesta});
         if(respuesta.cod == "00" || respuesta.cod =="10"){
-            let temp = registrarViaje(respuesta.id);
+            let temp = registrarViaje({"id":respuesta.id,"chofer":datoChofer.nombre+" "+datoChofer.apellido,"movil":movilSelec.label,"destino":datoForm.destino});
             if (temp !="00"){
                 setMsg("Error a la hora de registrar viaje")
 
@@ -118,7 +118,7 @@ const ViajeReg = (props) => {
                         </Col>
                         <Col>
                             <Form.Group className='mb-2'>
-                                <Form.Label>Movil<b className="fw-bold text-danger">*</b></Form.Label>
+                                <Form.Label>Móvil<b className="fw-bold text-danger">*</b></Form.Label>
                                 <Select
                                     name="movil"
                                     id="movil"

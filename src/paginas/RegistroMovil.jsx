@@ -45,7 +45,7 @@ const RegistroMovil = (props) => {
         if(respuesta.cod == "00"){
             setMsg("Registrado correctamente")
         }else{
-            setMsg("Error a la hora de registrar movil")
+            setMsg("Error a la hora de registrar móvil")
         }
         // REGISTRAR EN LA BD LOCAL EL USUARIO
 
