@@ -21,7 +21,7 @@ export default defineConfig({
                 short_name: 'vMonitor',
                 description: 'Sistema de monitoreo logistico. ValurqSRL',
                 theme_color: '#234dcc',
-                start_url: '/config',
+                start_url: '/perfil',
                 icons: [
                     {
                         "src": "android/android-launchericon-512-512.png",
