@@ -24,7 +24,7 @@ const CabeceraLogo = (props) => {
         <Container fluid style={{padding:"0px",justifyContent: "center",backgroundColor:'white'}} >
             <Row style={{width:"100%",justifyContent:"center",backgroundColor:"#005285",padding:"8px"}} id="opciones">
                 <Col xs={1} >
-                    <img src={LogoValurq} style={{height:'2em'}} />
+                    {/*<img src={LogoValurq} style={{height:'2em'}} />*/}
                 </Col>
                 <Col xs={11} >
                     <h3 style={{color:"white"}}>Monitoreo Logistica</h3>
