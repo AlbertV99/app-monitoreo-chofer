@@ -26,6 +26,7 @@ const ViajeMov = (props) => {
     const {endpointLibre,obtenerPersona,registrarMarcacion,obtenerHistorial,guardarNuevoJson} = Peticiones();
     useEffect(() => {
         let viaje = obtenerViaje()
+        geolocalizar()
         console.log(viaje)
         if(viaje=="99"){
             //cambiar a registro
