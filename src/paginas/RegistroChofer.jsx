@@ -59,7 +59,7 @@ const RegistroChofer = (props) => {
 
             }
         }else{
-            // console.log("error codigo")
+            console.log("error codigo")
             setMsg("Error a la hora de registrar chofer")
         }
         // Envía la foto y los datos al servidor utilizando fetch
