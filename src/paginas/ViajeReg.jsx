@@ -23,6 +23,8 @@ const ViajeReg = (props) => {
     const [listaMovil,setListaMovil] = useState([{ 'label': "ALB 753 - SCANIA", 'value': '1' }]);
     const [clienteSelec,setClienteSelec] = useState("");
     const [listaCliente,setListaCliente] = useState([{ 'label': "A S D SRL", 'value': '1' }]);
+    const [destinoSelec,setDestinoSelec] = useState("");
+    const [listaDestino,setListaDestino] = useState([{ 'label': "Jouser", 'value': 'Jouser' },{ 'label': "Planta", 'value': 'Planta' },{ 'label': "Central", 'value': 'Central' }]);
     const [datoForm,setDatoForm] = useState({"id_chofer":1,"id_movil":"","id_cliente":"","destino":"","dt":""});
     // const [,,,,,,endpointLibre,obtenerPersona,registrarMarcacion,obtenerHistorial] = Peticiones();
 
@@ -78,6 +80,7 @@ const ViajeReg = (props) => {
     const enviarDatos = async () => {
         datoForm.id_cliente=clienteSelec.value
         datoForm.id_movil = movilSelec.value
+        datoForm.destino = destinoSelec.value
         datoForm.estado = 'ACTIVO'
         console.log(datoForm);
         let respuesta = await guardarNuevoJson('/viaje/Parametros/ABMForm2.php?opcion=N',datoForm);
@@ -157,9 +160,17 @@ const ViajeReg = (props) => {
                         <Col xs={1}>
                         </Col>
                         <Col>
-                            <FloatingLabel controlId="floatingInput" label="Destino" className="mb-3">
-                                <Form.Control type="text" name="destino" placeholder="Ingrese destino" onChange={handleCampos} value={datoForm.destino}/>
-                            </FloatingLabel>
+                        <Form.Group className='mb-2'>
+                            <Form.Label>Destino<b className="fw-bold text-danger">*</b></Form.Label>
+                            <Select
+                                name="cliente"
+                                id="cliente"
+                                onChange={setDestinoSelec}
+                                options={listaDestino}
+                                isClearable={true}
+                                placeholder="Buscar Cliente"
+                            />
+                        </Form.Group>
                         </Col>
                         <Col xs={1}>
                         </Col>
