@@ -43,16 +43,16 @@ const RegistroChofer = (props) => {
         console.log(datoForm)
         let respuesta =await guardarNuevoJson('/chofer/Parametros/ABMForm.php',datoForm);
         // let respuesta = {cod:"00",msg:"correcto",id:"1"}
-        console.log(respuesta,respuesta.cod)
+        console.log(respuesta,respuesta.cod,"Test")
         // console.log("Pre Registro")
-        if(respuesta['cod'] == "00" || respuesta =="10"){
+        if(respuesta['cod'] == "00" || respuesta['cod'] =="10" ){
             datoForm.id = respuesta.id
             // console.log(datoForm,"primer If")
             let temp = registrarChofer(datoForm);
             // console.log("despues de registro local")
 
             if (temp !="00"){
-                setMsg("Error a la hora de registrar chofer")
+                setMsg(`Error a la hora de registrar chofer (${respuesta['cod']})`)
 
             }else{
                 setMsg("Registrado correctamente")
