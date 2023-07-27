@@ -21,6 +21,7 @@ const ViajeMov = (props) => {
     const [intervalo,setIntervalo] = useState(null)
     const [datoViaje,setDatoViaje] = useState({"id":"","chofer":"","movil":""});
     const [ubicacion,setUbicacion] = useState({"latitud":"","longitud":"","c":0});
+    const [intervaloW,setIntervaloW] = useState(null)
     // const [,,,,,,endpointLibre,obtenerPersona,registrarMarcacion,obtenerHistorial] = Peticiones();
 
     const {endpointLibre,obtenerPersona,registrarMarcacion,obtenerHistorial,guardarNuevoJson} = Peticiones();
@@ -56,7 +57,6 @@ const ViajeMov = (props) => {
         // console.log(datoForm);
     }
 
-
     const logoEstado= ()=>{
         return (estadoViaje)?<img src={LogoIniciarViaje} className="logoViaje" /> : <img src={LogoPararViaje} className="logoViaje" /> ;
     }
@@ -64,7 +64,7 @@ const ViajeMov = (props) => {
     const pulsarEnvios = ()=>{
         if(!pulsar){//comenzar pulsaciones
 
-            setIntervalo(setInterval(pulsaciones,120000)) // milisegundos
+            setIntervalo(setInterval(pulsaciones,60000)) // milisegundos
         }else{//parar pulsaciones
             clearInterval(intervalo);
             setIntervalo(null);
@@ -92,7 +92,7 @@ const ViajeMov = (props) => {
         };
         console.log("localizacion",configuracion)
         // navigator.geolocation.getCurrentPosition(
-        navigator.geolocation.watchPosition(
+        setIntervaloW(navigator.geolocation.watchPosition(
               (a) => {
                   console.log(a, a.coords.latitude,a.coords.longitude);
                   setUbicacion({"latitud":a.coords.latitude,"longitud":a.coords.longitude,"c":ubicacion.c++});
@@ -105,6 +105,7 @@ const ViajeMov = (props) => {
             },
             configuracion
           )
+      )
     }
 
     const enviarDatos = () => {
