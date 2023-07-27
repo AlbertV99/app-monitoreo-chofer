@@ -21,7 +21,8 @@ const ViajeMov = (props) => {
     const [datoViaje,setDatoViaje] = useState({"id":"","chofer":"","movil":""});
     const [ubicacion,setUbicacion] = useState({"latitud":"","longitud":"","c":0});
     const [datoForm,setDatoForm] = useState({"lat":"", "lon":"", "id_viaje": ""})
-    const [intervaloW,setIntervaloW] = useState(null)
+    const [intervaloW,setIntervaloW] = useState(null);
+    let datoViajeBK = {"lat":"", "lon":"", "id_viaje": ""};
     // const [,,,,,,endpointLibre,obtenerPersona,registrarMarcacion,obtenerHistorial] = Peticiones();
 
     const {endpointLibre,obtenerPersona,registrarMarcacion,obtenerHistorial,guardarNuevoJson} = Peticiones();
@@ -32,7 +33,8 @@ const ViajeMov = (props) => {
         if(viaje=="99"){
             //cambiar a registro
         }else{
-            let temp = JSON.parse(viaje)
+            let temp = JSON.parse(viaje);
+
             setDatoViaje(temp);
         }
     }, []);
@@ -63,8 +65,8 @@ const ViajeMov = (props) => {
 
     const pulsarEnvios = ()=>{
         if(!pulsar){//comenzar pulsaciones
-
-            setIntervalo(setInterval(pulsaciones,60000)) // milisegundos
+            let interv = setInterval(pulsaciones,20000)
+            setIntervalo(interv) // milisegundos
         }else{//parar pulsaciones
             clearInterval(intervalo);
             setIntervalo(null);
@@ -87,7 +89,7 @@ const ViajeMov = (props) => {
     const geolocalizar = async ()=>{
         const configuracion = {
             enableHighAccuracy: true,
-            timeout: 60000,
+            timeout: 6000,
             maximumAge: 0,
         };
         console.log("localizacion",configuracion)
@@ -96,7 +98,7 @@ const ViajeMov = (props) => {
               (a) => {
                   console.log(a, a.coords.latitude,a.coords.longitude);
                   setUbicacion({"latitud":a.coords.latitude,"longitud":a.coords.longitude,"c":ubicacion.c++});
-
+                  datoViajeBK = {"lat":a.coords.latitude, "lon":a.coords.longitude, "id_viaje":datoViaje.id }
                   setEstadoUbicacion(true);
               },
               (error)=>{
@@ -115,6 +117,7 @@ const ViajeMov = (props) => {
         setDatoForm({"lat":ubicacion.latitud,"lon":ubicacion.longitud,"id_viaje": datoViaje.id});
         console.log(datoForm)
         guardarNuevoJson("/posicion/Parametros/ABMForm.php",datoForm);
+        guardarNuevoJson("/posicion/Parametros/ABMForm.php",datoViajeBK);
         // Envía la foto y los datos al servidor utilizando fetch
 
     }
