@@ -15,12 +15,12 @@ const ViajeMov = (props) => {
     const [msg, setMsg] = useState("");
     const [estadoViaje, setEstadoViaje] = useState(true);
     const {obtenerChofer,registrarViaje,obtenerViaje} = LocalBD();
-    const [datoForm,setDatoForm] = useState({"cedula":"","chapa":""});
     const [pulsar,setPulso] = useState(false);
     const [estadoUbicacion,setEstadoUbicacion] = useState(false);
     const [intervalo,setIntervalo] = useState(null)
     const [datoViaje,setDatoViaje] = useState({"id":"","chofer":"","movil":""});
     const [ubicacion,setUbicacion] = useState({"latitud":"","longitud":"","c":0});
+    const [datoForm,setDatoForm] = useState({"lat":"", "lon":"", "id_viaje": ""})
     const [intervaloW,setIntervaloW] = useState(null)
     // const [,,,,,,endpointLibre,obtenerPersona,registrarMarcacion,obtenerHistorial] = Peticiones();
 
@@ -64,7 +64,7 @@ const ViajeMov = (props) => {
     const pulsarEnvios = ()=>{
         if(!pulsar){//comenzar pulsaciones
 
-            setIntervalo(setInterval(pulsaciones,60000)) // milisegundos 
+            setIntervalo(setInterval(pulsaciones,60000)) // milisegundos
         }else{//parar pulsaciones
             clearInterval(intervalo);
             setIntervalo(null);
@@ -96,6 +96,7 @@ const ViajeMov = (props) => {
               (a) => {
                   console.log(a, a.coords.latitude,a.coords.longitude);
                   setUbicacion({"latitud":a.coords.latitude,"longitud":a.coords.longitude,"c":ubicacion.c++});
+
                   setEstadoUbicacion(true);
               },
               (error)=>{
@@ -111,13 +112,9 @@ const ViajeMov = (props) => {
     const enviarDatos = () => {
         console.log(ubicacion)
         console.log(datoViaje)
-        const data = {
-            "lat":ubicacion.latitud,
-            "lon":ubicacion.longitud,
-            "id_viaje": datoViaje.id,
-        };
-        console.log(data)
-        guardarNuevoJson("/posicion/Parametros/ABMForm.php",data);
+        setDatoForm({"lat":ubicacion.latitud,"lon":ubicacion.longitud,"id_viaje": datoViaje.id});
+        console.log(datoForm)
+        guardarNuevoJson("/posicion/Parametros/ABMForm.php",datoForm);
         // Envía la foto y los datos al servidor utilizando fetch
 
     }
@@ -172,7 +169,7 @@ const ViajeMov = (props) => {
 
                     <Row>
                         <Col>
-                            <h3>{ubicacion.c+" ["+ubicacion.latitud+":"+ubicacion.longitud+"]"}</h3>
+                            <h3>{" ["+datoForm.lat+":"+datoForm.lon+"]"}</h3>
                         </Col>
                     </Row>
                 </Container>
