@@ -25,6 +25,7 @@ const ViajeReg = (props) => {
     const [listaCliente,setListaCliente] = useState([{ 'label': "A S D SRL", 'value': '1' }]);
     const [destinoSelec,setDestinoSelec] = useState("");
     const [listaDestino,setListaDestino] = useState([{ 'label': "Jouser", 'value': 'Jouser' },{ 'label': "Planta", 'value': 'Planta' },{ 'label': "Central", 'value': 'Central' }]);
+    const [estadoEnvio,setEstadoEnvio] = useState(true)
     const [datoForm,setDatoForm] = useState({"id_chofer":1,"id_movil":"","id_cliente":"","destino":"","dt":""});
     // const [,,,,,,endpointLibre,obtenerPersona,registrarMarcacion,obtenerHistorial] = Peticiones();
 
@@ -78,6 +79,7 @@ const ViajeReg = (props) => {
     }
 
     const enviarDatos = async () => {
+        setEstadoEnvio(false)
         datoForm.id_cliente=clienteSelec.value
         datoForm.id_movil = movilSelec.value
         datoForm.destino = destinoSelec.value
@@ -85,11 +87,12 @@ const ViajeReg = (props) => {
         console.log(datoForm);
         let respuesta = await guardarNuevoJson('/viaje/Parametros/ABMForm2.php?opcion=N',datoForm);
         console.log({"respuesta":respuesta});
+
         if(respuesta.cod == "00" || respuesta.cod =="10"){
             let temp = registrarViaje({"id":respuesta.idViaje,"chofer":datoChofer.nombre+" "+datoChofer.apellido,"movil":movilSelec.label,"destino":datoForm.destino});
             if (temp !="00"){
                 setMsg("Error a la hora de registrar viaje")
-
+                estadoEnvio(true)
             }else{
                 navg("/viajeMov")
                 setMsg("Registrado correctamente")
@@ -190,7 +193,7 @@ const ViajeReg = (props) => {
                         <Col xs={1}>
                         </Col>
                         <Col>
-                            <Button variant="success" style={{width:"100%"}} onClick={enviarDatos}>
+                            <Button variant="success" style={{width:"100%"}} onClick={enviarDatos} disabled={!estadoEnvio}>
                                     Guardar e Iniciar
                             </Button>
                         </Col>

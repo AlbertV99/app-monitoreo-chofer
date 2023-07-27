@@ -20,7 +20,7 @@ const ViajeMov = (props) => {
     const [estadoUbicacion,setEstadoUbicacion] = useState(false);
     const [intervalo,setIntervalo] = useState(null)
     const [datoViaje,setDatoViaje] = useState({"id":"","chofer":"","movil":""});
-    const [ubicacion,setUbicacion] = useState({"latitud":"","longitud":""});
+    const [ubicacion,setUbicacion] = useState({"latitud":"","longitud":"","c":0});
     // const [,,,,,,endpointLibre,obtenerPersona,registrarMarcacion,obtenerHistorial] = Peticiones();
 
     const {endpointLibre,obtenerPersona,registrarMarcacion,obtenerHistorial,guardarNuevoJson} = Peticiones();
@@ -66,7 +66,8 @@ const ViajeMov = (props) => {
             setIntervalo(setInterval(pulsaciones,120000)) // milisegundos
         }else{//parar pulsaciones
             clearInterval(intervalo);
-            setIntervalo(null)
+            setIntervalo(null);
+
         }
         setPulso(!pulsar);
 
@@ -87,7 +88,7 @@ const ViajeMov = (props) => {
               (a) => {
                   console.log(a, a.coords.latitude,a.coords.longitude);
 
-                  setUbicacion({"latitud":a.coords.latitude,"longitud":a.coords.longitude});
+                  setUbicacion({"latitud":a.coords.latitude,"longitud":a.coords.longitude,"c":ubicacion.c++});
                   setEstadoUbicacion(true);
               },
               (error)=>{
@@ -162,7 +163,7 @@ const ViajeMov = (props) => {
 
                     <Row>
                         <Col>
-                            <h3>{msg}</h3>
+                            <h3>{ubicacion.c+" ["+ubicacion.latitud+":"+ubicacion.longitud+"]"}</h3>
                         </Col>
                     </Row>
                 </Container>
