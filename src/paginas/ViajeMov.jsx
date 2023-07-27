@@ -90,7 +90,7 @@ const ViajeMov = (props) => {
     const geolocalizar = async ()=>{
         const configuracion = {
             enableHighAccuracy: true,
-            timeout: 10000,
+            timeout: 60000,
             maximumAge: 0,
         };
         console.log("localizacion",configuracion)
