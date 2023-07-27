@@ -115,8 +115,8 @@ const ViajeMov = (props) => {
 
     const enviarDatos2 = (datos) =>{
         console.log(datos)
-        setDatoForm(datos);
-        guardarNuevoJson("/posicion/Parametros/ABMForm.php",datos);
+        setDatoForm({"lat":datos.latitud,"lon":datos.longitud,"id_viaje":datosViaje.id});
+        guardarNuevoJson("/posicion/Parametros/ABMForm.php",{"lat":datos.latitud,"lon":datos.longitud,"id_viaje":datosViaje.id});
 
     }
     const enviarDatos = () => {
