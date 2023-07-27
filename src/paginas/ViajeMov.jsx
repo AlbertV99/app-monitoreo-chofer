@@ -98,9 +98,9 @@ const ViajeMov = (props) => {
         setIntervaloW(navigator.geolocation.watchPosition(
               (a) => {
                   console.log(a, a.coords.latitude,a.coords.longitude);
-                  // setUbicacion({"latitud":a.coords.latitude,"longitud":a.coords.longitude,"c":ubicacion.c++});
+                  setUbicacion({"latitud":a.coords.latitude+"","longitud":a.coords.longitude+"","c":ubicacion.c++});
                   datoViajeBK = {"lat":a.coords.latitude, "lon":a.coords.longitude, "id_viaje":datoViaje.id };
-                  setUbicacion({"lat":a.coords.latitude+"", "lon":a.coords.longitude+"", "id_viaje":datoViaje.id +""});
+                  // setUbicacion({"lat":a.coords.latitude+"", "lon":a.coords.longitude+"", "id_viaje":datoViaje.id +""});
                   setEstadoUbicacion(true);
               },
               (error)=>{
