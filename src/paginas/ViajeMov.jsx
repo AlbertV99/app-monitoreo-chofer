@@ -63,6 +63,7 @@ const ViajeMov = (props) => {
 
     const pulsarEnvios = ()=>{
         if(!pulsar){//comenzar pulsaciones
+
             setIntervalo(setInterval(pulsaciones,120000)) // milisegundos
         }else{//parar pulsaciones
             clearInterval(intervalo);
@@ -78,16 +79,22 @@ const ViajeMov = (props) => {
     }
 
     const pulsaciones = ()=>{
-        geolocalizar();
+        // geolocalizar();
         enviarDatos();
 
     }
 
     const geolocalizar = async ()=>{
-          navigator.geolocation.getCurrentPosition(
+        const configuracion = {
+            enableHighAccuracy: true,
+            timeout: 60000,
+            maximumAge: 0,
+        };
+        console.log("localizacion",configuracion)
+        // navigator.geolocation.getCurrentPosition(
+        navigator.geolocation.watchPosition(
               (a) => {
                   console.log(a, a.coords.latitude,a.coords.longitude);
-
                   setUbicacion({"latitud":a.coords.latitude,"longitud":a.coords.longitude,"c":ubicacion.c++});
                   setEstadoUbicacion(true);
               },
@@ -95,7 +102,8 @@ const ViajeMov = (props) => {
                 console.log("No activo la geolocalizacion",error);
                 setEstadoUbicacion(false);
 
-              }
+            },
+            configuracion
           )
     }
 
