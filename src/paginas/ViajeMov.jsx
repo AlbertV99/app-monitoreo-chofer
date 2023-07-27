@@ -28,7 +28,7 @@ const ViajeMov = (props) => {
     const {endpointLibre,obtenerPersona,registrarMarcacion,obtenerHistorial,guardarNuevoJson} = Peticiones();
     useEffect(() => {
         let viaje = obtenerViaje()
-        geolocalizar()
+        // geolocalizar()
         console.log(viaje)
         if(viaje=="99"){
             //cambiar a registro
@@ -65,10 +65,11 @@ const ViajeMov = (props) => {
 
     const pulsarEnvios = ()=>{
         if(!pulsar){//comenzar pulsaciones
-            let interv = setInterval(pulsaciones,20000)
-            setIntervalo(interv) // milisegundos
+            // let interv = setInterval(pulsaciones,20000)
+            // setIntervalo(interv) // milisegundos
+            geolocalizar()
         }else{//parar pulsaciones
-            clearInterval(intervalo);
+            navigator.geolocation.clearWatch(intervaloW);
             setIntervalo(null);
 
         }
@@ -98,8 +99,8 @@ const ViajeMov = (props) => {
               (a) => {
                   console.log(a, a.coords.latitude,a.coords.longitude);
                   setUbicacion({"latitud":a.coords.latitude,"longitud":a.coords.longitude,"c":ubicacion.c++});
-                  datoViajeBK = {"lat":a.coords.latitude, "lon":a.coords.longitude, "id_viaje":datoViaje.id }
-
+                  datoViajeBK = {"lat":a.coords.latitude, "lon":a.coords.longitude, "id_viaje":datoViaje.id };
+                  enviarDatos2({"lat":a.coords.latitude+"", "lon":a.coords.longitude+"", "id_viaje":datoViaje.id +""});
                   setEstadoUbicacion(true);
               },
               (error)=>{
@@ -112,6 +113,12 @@ const ViajeMov = (props) => {
       )
     }
 
+    const enviarDatos2 = (datos) =>{
+        console.log(datos)
+        setDatoForm(datos);
+        guardarNuevoJson("/posicion/Parametros/ABMForm.php",datos);
+
+    }
     const enviarDatos = () => {
         console.log(ubicacion)
         console.log(datoViaje)
@@ -162,7 +169,7 @@ const ViajeMov = (props) => {
                     </Row>
                     <Row>
                         <Col>
-                            <Button className={`botonViaje ${estadoViaje?'Iniciar':'Parar'}`} onClick={()=>pulsarEnvios()}> {logoEstado()}</Button>
+                            <Button className={`botonViaje ${estadoViaje?'Iniciar':'Parar'}`} onClick={pulsarEnvios}> {logoEstado()}</Button>
                         </Col>
                     </Row>
                     <Row>
@@ -175,6 +182,11 @@ const ViajeMov = (props) => {
                     <Row>
                         <Col>
                             <h3>{" ["+datoForm.lat+":"+datoForm.lon+"]"}</h3>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col>
+                            <h3>{" ["+ubicacion.latitud+":"+ubicacion.longitud+"]"}</h3>
                         </Col>
                     </Row>
                 </Container>
