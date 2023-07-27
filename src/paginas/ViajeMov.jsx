@@ -89,7 +89,7 @@ const ViajeMov = (props) => {
     const geolocalizar = async ()=>{
         const configuracion = {
             enableHighAccuracy: true,
-            timeout: 6000,
+            timeout: 10000,
             maximumAge: 0,
         };
         console.log("localizacion",configuracion)
@@ -99,6 +99,7 @@ const ViajeMov = (props) => {
                   console.log(a, a.coords.latitude,a.coords.longitude);
                   setUbicacion({"latitud":a.coords.latitude,"longitud":a.coords.longitude,"c":ubicacion.c++});
                   datoViajeBK = {"lat":a.coords.latitude, "lon":a.coords.longitude, "id_viaje":datoViaje.id }
+
                   setEstadoUbicacion(true);
               },
               (error)=>{
