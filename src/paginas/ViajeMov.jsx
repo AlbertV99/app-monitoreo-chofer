@@ -74,7 +74,7 @@ const ViajeMov = (props) => {
         }
         setPulso(!pulsar);
 
-       console.log(datoForm,estadoViaje);
+
        setEstadoViaje(!estadoViaje)
 
 
@@ -116,9 +116,10 @@ const ViajeMov = (props) => {
         console.log(ubicacion)
         console.log(datoViaje)
         setDatoForm({"lat":ubicacion.latitud,"lon":ubicacion.longitud,"id_viaje": datoViaje.id});
-        console.log(datoForm)
+        console.log(datoForm,datoViajeBK,{"lat":ubicacion.latitud,"lon":ubicacion.longitud,"id_viaje": datoViaje.id});
         guardarNuevoJson("/posicion/Parametros/ABMForm.php",datoForm);
         guardarNuevoJson("/posicion/Parametros/ABMForm.php",datoViajeBK);
+        guardarNuevoJson("/posicion/Parametros/ABMForm.php", {"lat":ubicacion.latitud,"lon":ubicacion.longitud,"id_viaje": datoViaje.id});
         // Envía la foto y los datos al servidor utilizando fetch
 
     }
