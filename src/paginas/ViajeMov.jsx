@@ -114,9 +114,9 @@ const ViajeMov = (props) => {
     }
 
     const enviarDatos2 = (datos) =>{
-        console.log(datos)
-        setDatoForm({"lat":datos.latitud,"lon":datos.longitud,"id_viaje":datoViaje.id});
-        guardarNuevoJson("/posicion/Parametros/ABMForm.php",{"lat":datos.latitud,"lon":datos.longitud,"id_viaje":datoViaje.id});
+        console.log(datoViajeBK)
+        setDatoForm({"lat":datoViajeBK.lat,"lon":datoViajeBK.lon,"id_viaje":datoViaje.id});
+        guardarNuevoJson("/posicion/Parametros/ABMForm.php",{"lat":datoViajeBK.lat,"lon":datoViajeBK.lon,"id_viaje":datoViaje.id});
 
     }
     const enviarDatos = () => {
