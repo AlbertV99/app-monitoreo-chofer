@@ -65,8 +65,8 @@ const ViajeMov = (props) => {
 
     const pulsarEnvios = ()=>{
         if(!pulsar){//comenzar pulsaciones
-            // let interv = setInterval(pulsaciones,20000)
-            // setIntervalo(interv) // milisegundos
+            let interv = setInterval(pulsaciones,10000)
+            setIntervalo(interv) // milisegundos
             geolocalizar()
         }else{//parar pulsaciones
             navigator.geolocation.clearWatch(intervaloW);
@@ -83,14 +83,14 @@ const ViajeMov = (props) => {
 
     const pulsaciones = ()=>{
         // geolocalizar();
-        enviarDatos();
+        enviarDatos2(ubicacion);
 
     }
 
     const geolocalizar = async ()=>{
         const configuracion = {
             enableHighAccuracy: true,
-            timeout: 60000,
+            timeout: 10000,
             maximumAge: 0,
         };
         console.log("localizacion",configuracion)
@@ -98,9 +98,9 @@ const ViajeMov = (props) => {
         setIntervaloW(navigator.geolocation.watchPosition(
               (a) => {
                   console.log(a, a.coords.latitude,a.coords.longitude);
-                  setUbicacion({"latitud":a.coords.latitude,"longitud":a.coords.longitude,"c":ubicacion.c++});
+                  // setUbicacion({"latitud":a.coords.latitude,"longitud":a.coords.longitude,"c":ubicacion.c++});
                   datoViajeBK = {"lat":a.coords.latitude, "lon":a.coords.longitude, "id_viaje":datoViaje.id };
-                  enviarDatos2({"lat":a.coords.latitude+"", "lon":a.coords.longitude+"", "id_viaje":datoViaje.id +""});
+                  setUbicacion({"lat":a.coords.latitude+"", "lon":a.coords.longitude+"", "id_viaje":datoViaje.id +""});
                   setEstadoUbicacion(true);
               },
               (error)=>{
