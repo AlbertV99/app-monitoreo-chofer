@@ -23,6 +23,7 @@ const ViajeMov = (props) => {
     const [datoForm,setDatoForm] = useState({"lat":"", "lon":"", "id_viaje": ""})
     const [intervaloW,setIntervaloW] = useState(null);
     let datoViajeBK = {"lat":"", "lon":"", "id_viaje": ""};
+    const TIEMPO_INTERVALOS = 60000;
     // const [,,,,,,endpointLibre,obtenerPersona,registrarMarcacion,obtenerHistorial] = Peticiones();
 
     const {endpointLibre,obtenerPersona,registrarMarcacion,obtenerHistorial,guardarNuevoJson} = Peticiones();
@@ -65,7 +66,7 @@ const ViajeMov = (props) => {
 
     const pulsarEnvios = ()=>{
         if(!pulsar){//comenzar pulsaciones
-            let interv = setInterval(pulsaciones,10000)
+            let interv = setInterval(pulsaciones,TIEMPO_INTERVALOS)
             setIntervalo(interv) // milisegundos
             geolocalizar()
         }else{//parar pulsaciones
@@ -91,7 +92,7 @@ const ViajeMov = (props) => {
     const geolocalizar = async ()=>{
         const configuracion = {
             enableHighAccuracy: true,
-            timeout: 60000,
+            timeout: TIEMPO_INTERVALOS,
             maximumAge: 0,
         };
         console.log("localizacion",configuracion)
