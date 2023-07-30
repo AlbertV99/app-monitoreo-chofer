@@ -70,6 +70,7 @@ const ViajeMov = (props) => {
             geolocalizar()
         }else{//parar pulsaciones
             navigator.geolocation.clearWatch(intervaloW);
+            clearInterval(Intervalo)
             setIntervalo(null);
 
         }
@@ -90,7 +91,7 @@ const ViajeMov = (props) => {
     const geolocalizar = async ()=>{
         const configuracion = {
             enableHighAccuracy: true,
-            timeout: 10000,
+            timeout: 60000,
             maximumAge: 0,
         };
         console.log("localizacion",configuracion)
@@ -181,12 +182,12 @@ const ViajeMov = (props) => {
 
                     <Row>
                         <Col>
-                            <h3>{" ["+datoForm.lat+":"+datoForm.lon+"]"}</h3>
+                            <p style={{fontSize:'8pt',color:'#a2a4a6',margin:'3px 0px'}}>>{" ["+datoForm.lat+":"+datoForm.lon+"]"}</p>
                         </Col>
                     </Row>
                     <Row>
                         <Col>
-                            <h3>{" ["+ubicacion.latitud+":"+ubicacion.longitud+"]"}</h3>
+                            <p style={{fontSize:'8pt',color:'#a2a4a6',margin:'3px 0px'}}>>{" ["+ubicacion.latitud+":"+ubicacion.longitud+"]"}</p>
                         </Col>
                     </Row>
                 </Container>
