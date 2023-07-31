@@ -71,7 +71,7 @@ const ViajeMov = (props) => {
             geolocalizar()
         }else{//parar pulsaciones
             navigator.geolocation.clearWatch(intervaloW);
-            clearInterval(Intervalo)
+            clearInterval(intervalo)
             setIntervalo(null);
 
         }
@@ -92,7 +92,6 @@ const ViajeMov = (props) => {
     const geolocalizar = async ()=>{
         const configuracion = {
             enableHighAccuracy: true,
-            timeout: TIEMPO_INTERVALOS,
             maximumAge: 0,
         };
         console.log("localizacion",configuracion)

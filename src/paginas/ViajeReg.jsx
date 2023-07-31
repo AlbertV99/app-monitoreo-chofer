@@ -80,7 +80,7 @@ const ViajeReg = (props) => {
 
     const enviarDatos = async () => {
         setEstadoEnvio(false)
-        if(clienteSelec == "" || movilSelec == "" || destinoSelec == ""){
+        if(datoChofer.id =="0" || clienteSelec == "" || movilSelec == "" || destinoSelec == ""){
             alert("Debe completar todos los campos")
             return
         }
