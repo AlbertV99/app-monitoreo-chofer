@@ -26,7 +26,7 @@ const ViajeReg = (props) => {
     const [destinoSelec,setDestinoSelec] = useState("");
     const [listaDestino,setListaDestino] = useState([{ 'label': "Jouser", 'value': 'Jouser' },{ 'label': "Planta", 'value': 'Planta' },{ 'label': "Central", 'value': 'Central' }]);
     const [estadoEnvio,setEstadoEnvio] = useState(true)
-    const [datoForm,setDatoForm] = useState({"id_chofer":1,"id_movil":"","id_cliente":"","destino":"","dt":""});
+    const [datoForm,setDatoForm] = useState({"id_chofer":1,"id_movil":"","id_cliente":"","destino":"","dt":"","fecha_fin":"","hora_fin":""});
     // const [,,,,,,endpointLibre,obtenerPersona,registrarMarcacion,obtenerHistorial] = Peticiones();
 
     const {endpointLibre,obtenerPersona,registrarMarcacion,obtenerHistorial,guardarNuevoJson} = Peticiones();
@@ -80,6 +80,10 @@ const ViajeReg = (props) => {
 
     const enviarDatos = async () => {
         setEstadoEnvio(false)
+        if(clienteSelec == "" || movilSelec == "" || destinoSelec == ""){
+            alert("Debe completar todos los campos")
+            return
+        }
         datoForm.id_cliente=clienteSelec.value
         datoForm.id_movil = movilSelec.value
         datoForm.destino = destinoSelec.value
@@ -110,7 +114,6 @@ const ViajeReg = (props) => {
         <>
             <Form>
                 <Container fluid style={{alignItems:"center",gridGap:"1em",display:"grid",marginTop:"3em"}}>
-                    <Row></Row>
                     <Row></Row>
                     <Row>
                         <Col xs={1}>
@@ -189,6 +192,30 @@ const ViajeReg = (props) => {
                         <Col xs={1}>
                         </Col>
                     </Row>
+                    {/*
+                        <Row>
+                            <Col xs={1}>
+                            </Col>
+                            <Col>
+                                <FloatingLabel controlId="floatingInput" label="Fecha llegada" className="mb-3">
+                                    <Form.Control type="text" name="fecha_fin" placeholder="Ingrese fecha de llegada" onChange={handleCampos} value={datoForm.fecha_fin}/>
+                                </FloatingLabel>
+                            </Col>
+                            <Col xs={1}>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col xs={1}>
+                            </Col>
+                            <Col>
+                                <FloatingLabel controlId="floatingInput" label="Hora llegada" className="mb-3">
+                                    <Form.Control type="text" name="hora_fin" placeholder="Ingrese hora de llegada" onChange={handleCampos} value={datoForm.hora_fin}/>
+                                </FloatingLabel>
+                            </Col>
+                            <Col xs={1}>
+                            </Col>
+                        </Row>
+                    */}
                     <Row>
                         <Col xs={1}>
                         </Col>

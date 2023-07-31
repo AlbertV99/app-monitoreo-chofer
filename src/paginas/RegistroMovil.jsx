@@ -40,6 +40,9 @@ const RegistroMovil = (props) => {
     }
 
     const enviarDatos = async () => {
+        if(datoForm.chapa =="" || datoForm.marca == "" ){
+
+        }
         console.log(datoForm)
         let respuesta = await guardarNuevoJson('/mov/Parametros/ABMForm.php',datoForm);
         if(respuesta.cod == "00"){
@@ -62,7 +65,7 @@ const RegistroMovil = (props) => {
                         <Col xs={1}>
                         </Col>
                         <Col>
-                            <FloatingLabel controlId="floatingInput" label="Chapa" className="mb-3">
+                            <FloatingLabel controlId="floatingInput" label="Chapa *" className="mb-3">
                                 <Form.Control type="text" name="chapa" placeholder="Chapa" onChange={handleCampos} value={datoForm.chapa}/>
                             </FloatingLabel>
                         </Col>
@@ -73,7 +76,7 @@ const RegistroMovil = (props) => {
                         <Col xs={1}>
                         </Col>
                         <Col>
-                            <FloatingLabel controlId="floatingInput" label="Marca" className="mb-3">
+                            <FloatingLabel controlId="floatingInput" label="Marca *" className="mb-3">
                                 <Form.Control type="text" name="marca" placeholder="Marca" onChange={handleCampos} value={datoForm.marca}/>
                             </FloatingLabel>
                         </Col>

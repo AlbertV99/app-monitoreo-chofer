@@ -39,6 +39,10 @@ const RegistroChofer = (props) => {
         // datoForm.nro_cedula="5031168"
         // datoForm.nombre="Alberto"
         // datoForm.apellido="Valdez";
+        if(datoForm.nro_cedula == "" || datoForm.nombre == "" || datoForm.apellido == ""){
+            alert("Favor completar todos los campos")
+            return;
+        }
         datoForm.obs="";
         console.log(datoForm)
         let respuesta =await guardarNuevoJson('/chofer/Parametros/ABMForm.php',datoForm);
@@ -80,7 +84,7 @@ const RegistroChofer = (props) => {
                         <Col xs={1}>
                         </Col>
                         <Col>
-                            <FloatingLabel controlId="floatingInput" label="Cédula de Identidad" className="mb-3">
+                            <FloatingLabel controlId="floatingInput" label="Cédula de Identidad *" className="mb-3">
                                 <Form.Control type="text" name="nro_cedula" placeholder="Ingrese cédula" onChange={handleCampos} value={datoForm.nro_cedula}/>
                             </FloatingLabel>
                         </Col>
@@ -91,7 +95,7 @@ const RegistroChofer = (props) => {
                         <Col xs={1}>
                         </Col>
                         <Col>
-                            <FloatingLabel controlId="floatingInput" label="Nombre" className="mb-3">
+                            <FloatingLabel controlId="floatingInput" label="Nombre *" className="mb-3">
                                 <Form.Control type="text" name="nombre" placeholder="Nombre" onChange={handleCampos} value={datoForm.nombre}/>
                             </FloatingLabel>
                         </Col>
@@ -102,7 +106,7 @@ const RegistroChofer = (props) => {
                         <Col xs={1}>
                         </Col>
                         <Col>
-                            <FloatingLabel controlId="floatingInput" label="Apellido" className="mb-3">
+                            <FloatingLabel controlId="floatingInput" label="Apellido *" className="mb-3">
                                 <Form.Control type="text" name="apellido" placeholder="Apellido" onChange={handleCampos} value={datoForm.apellido}/>
                             </FloatingLabel>
                         </Col>
