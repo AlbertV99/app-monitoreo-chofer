@@ -80,7 +80,11 @@ const ViajeReg = (props) => {
 
     const enviarDatos = async () => {
         setEstadoEnvio(false)
-        if(datoChofer.id =="0" || clienteSelec == "" || movilSelec == "" || destinoSelec == ""){
+        if(datoChofer.id =="0"){
+            alert("Debe registrarse como chofer")
+            return
+        }
+        if( clienteSelec == "" || movilSelec == "" || destinoSelec == ""){
             alert("Debe completar todos los campos")
             return
         }
@@ -192,30 +196,28 @@ const ViajeReg = (props) => {
                         <Col xs={1}>
                         </Col>
                     </Row>
-                    {/*
-                        <Row>
-                            <Col xs={1}>
-                            </Col>
-                            <Col>
-                                <FloatingLabel controlId="floatingInput" label="Fecha llegada" className="mb-3">
-                                    <Form.Control type="text" name="fecha_fin" placeholder="Ingrese fecha de llegada" onChange={handleCampos} value={datoForm.fecha_fin}/>
-                                </FloatingLabel>
-                            </Col>
-                            <Col xs={1}>
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col xs={1}>
-                            </Col>
-                            <Col>
-                                <FloatingLabel controlId="floatingInput" label="Hora llegada" className="mb-3">
-                                    <Form.Control type="text" name="hora_fin" placeholder="Ingrese hora de llegada" onChange={handleCampos} value={datoForm.hora_fin}/>
-                                </FloatingLabel>
-                            </Col>
-                            <Col xs={1}>
-                            </Col>
-                        </Row>
-                    */}
+                    <Row>
+                        <Col xs={1}>
+                        </Col>
+                        <Col>
+                            <FloatingLabel controlId="floatingInput" label="Fecha llegada" className="mb-3">
+                                <Form.Control type="text" name="fecha_fin" placeholder="Ingrese fecha de llegada" onChange={handleCampos} value={datoForm.fecha_fin}/>
+                            </FloatingLabel>
+                        </Col>
+                        <Col xs={1}>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col xs={1}>
+                        </Col>
+                        <Col>
+                            <FloatingLabel controlId="floatingInput" label="Hora llegada" className="mb-3">
+                                <Form.Control type="text" name="hora_fin" placeholder="Ingrese hora de llegada" onChange={handleCampos} value={datoForm.hora_fin}/>
+                            </FloatingLabel>
+                        </Col>
+                        <Col xs={1}>
+                        </Col>
+                    </Row>
                     <Row>
                         <Col xs={1}>
                         </Col>
