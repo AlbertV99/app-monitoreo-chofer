@@ -197,26 +197,18 @@ const ViajeReg = (props) => {
                         </Col>
                     </Row>
                     <Row>
-                        <Col xs={1}>
-                        </Col>
-                        <Col>
+                        <Col xs={1}></Col>
+                        <Col xs={5}>
                             <FloatingLabel controlId="floatingInput" label="Fecha llegada" className="mb-3">
-                                <Form.Control type="text" name="fecha_fin" placeholder="Ingrese fecha de llegada" onChange={handleCampos} value={datoForm.fecha_fin}/>
+                                <Form.Control type="date" name="fecha_fin" placeholder="Ingrese fecha de llegada" onChange={handleCampos} value={datoForm.fecha_fin}/>
                             </FloatingLabel>
                         </Col>
-                        <Col xs={1}>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col xs={1}>
-                        </Col>
-                        <Col>
+                        <Col xs={5}>
                             <FloatingLabel controlId="floatingInput" label="Hora llegada" className="mb-3">
-                                <Form.Control type="text" name="hora_fin" placeholder="Ingrese hora de llegada" onChange={handleCampos} value={datoForm.hora_fin}/>
+                                <Form.Control type="time" name="hora_fin" placeholder="Ingrese hora de llegada" onChange={handleCampos} value={datoForm.hora_fin}/>
                             </FloatingLabel>
                         </Col>
-                        <Col xs={1}>
-                        </Col>
+                        <Col xs={1}></Col>
                     </Row>
                     <Row>
                         <Col xs={1}>
