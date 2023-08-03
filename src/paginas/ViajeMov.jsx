@@ -37,6 +37,12 @@ const ViajeMov = (props) => {
             let temp = JSON.parse(viaje);
 
             setDatoViaje(temp);
+            alert("Recomendaciones para iniciar un viaje:\n"+
+                  "- Mantenga sus datos prendidos en todo momento\n"+
+                  "- Tenga el GPS encendido durante el viaje\n"+
+                  "- No bloquee el Celular \n"+
+                  "- Maneje con cuidado"
+                  )
         }
     }, []);
 
@@ -120,14 +126,10 @@ const ViajeMov = (props) => {
         guardarNuevoJson("/posicion/Parametros/ABMForm.php",{"lat":datoViajeBK.lat,"lon":datoViajeBK.lon,"id_viaje":datoViaje.id});
 
     }
-    const enviarDatos = () => {
-        console.log(ubicacion)
-        console.log(datoViaje)
-        setDatoForm({"lat":ubicacion.latitud,"lon":ubicacion.longitud,"id_viaje": datoViaje.id});
-        console.log(datoForm,datoViajeBK,{"lat":ubicacion.latitud,"lon":ubicacion.longitud,"id_viaje": datoViaje.id});
-        guardarNuevoJson("/posicion/Parametros/ABMForm.php",datoForm);
-        guardarNuevoJson("/posicion/Parametros/ABMForm.php",datoViajeBK);
-        guardarNuevoJson("/posicion/Parametros/ABMForm.php", {"lat":ubicacion.latitud,"lon":ubicacion.longitud,"id_viaje": datoViaje.id});
+    const pararViaje = () => {
+        setDatoForm({"id_viaje":datoViaje.id,"estado":"TERMINADO"});
+        // guardarNuevoJson("/posicion/Parametros/ABMForm.php",datoForm);
+        guardarNuevoJson("/viaje/Parametros/ABMForm2.php?opcion=N",datoForm);
         // Envía la foto y los datos al servidor utilizando fetch
 
     }
@@ -146,23 +148,7 @@ const ViajeMov = (props) => {
                         </Col>
                         <Col>
                             <h3>{datoViaje.destino}</h3>
-                        </Col>
-                        <Col xs={1}>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col xs={1}>
-                        </Col>
-                        <Col>
                             <p>{datoViaje.chofer}</p>
-                        </Col>
-                        <Col xs={1}>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col xs={1}>
-                        </Col>
-                        <Col>
                             <p>{datoViaje.movil}</p>
                         </Col>
                         <Col xs={1}>
