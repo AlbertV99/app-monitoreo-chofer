@@ -2,6 +2,7 @@ import React,{useState,useEffect} from 'react'
 import PropTypes from 'prop-types'
 import {Container,Navbar,Row,Col,Button,Form,FloatingLabel} from 'react-bootstrap';
 import MenuInferior from '../components/menuInf'
+// import ValidacionRegresar from '../components/validacionRegresar'
 import Peticiones from '../helpers/peticiones.js'
 import LocalBD from '../helpers/localBd.js'
 import LogoIniciarViaje from '../assets/enviado.png'
@@ -19,7 +20,8 @@ const RegistroChofer = (props) => {
     const {registrarChofer} = LocalBD();
     const {endpointLibre,obtenerPersona,registrarMarcacion,obtenerHistorial,guardarNuevoJson} = Peticiones();
     useEffect(() => {
-
+        console.log("pre-test")
+        window.addEventListener('popstate', handleBeforeUnload);
     }, []);
 
     const handleCampos = (event)=>{
@@ -29,6 +31,23 @@ const RegistroChofer = (props) => {
         });
         // console.log(datoForm);
     }
+
+    const handleBeforeUnload = (event) => {
+        console.log("Test handler",event)
+        event.preventDefault()
+        const confirmacion = window.confirm('¿Desea volver a la página anterior?\n (Esta acción cancelará el viaje actual)');
+        if (confirmacion) {
+            // Puedes utilizar el objeto window.history para navegar hacia atrás
+            // window.history.back();
+        } else {
+            event.preventDefault()
+            // Si el usuario cancela la acción, prevenimos el cambio de página
+            window.history.pushState(null, null, window.location.pathname);
+        }
+        event.returnValue= false
+        window.removeEventListener('popstate', handleBeforeUnload);
+        return ""
+    };
 
     const logoEstado= ()=>{
         return (estadoViaje)?<img src={LogoIniciarViaje} className="logoViaje" /> : <img src={LogoPararViaje} className="logoViaje" /> ;

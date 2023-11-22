@@ -22,6 +22,7 @@ const ViajeMov = (props) => {
     const [ubicacion,setUbicacion] = useState({"latitud":"","longitud":"","c":0});
     const [datoForm,setDatoForm] = useState({"lat":"", "lon":"", "id_viaje": ""})
     const [intervaloW,setIntervaloW] = useState(null);
+    const [estadoEncuesta,setEstadoEncuesta] = useState(true)
     let datoViajeBK = {"lat":"", "lon":"", "id_viaje": ""};
     const TIEMPO_INTERVALOS = 60000;
     // const [,,,,,,endpointLibre,obtenerPersona,registrarMarcacion,obtenerHistorial] = Peticiones();
@@ -38,13 +39,17 @@ const ViajeMov = (props) => {
 
             setDatoViaje(temp);
             alert("Recomendaciones para iniciar un viaje:\n"+
-                  "- Mantenga sus datos prendidos en todo momento\n"+
-                  "- Tenga el GPS encendido durante el viaje\n"+
-                  "- No bloquee el Celular \n"+
-                  "- Maneje con cuidado"
-                  )
+                "- Mantenga sus datos prendidos en todo momento\n"+
+                "- Tenga el GPS encendido durante el viaje\n"+
+                "- No bloquee el Celular \n"+
+                "- Maneje con cuidado"
+              )
         }
     }, []);
+
+    const encuesta =()=>{
+
+    }
 
     const verificarChofer = ()=>{
         let chofer = obtenerChofer()
