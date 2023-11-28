@@ -40,7 +40,7 @@ const EncuestaEstrellas = ({idViaje}) => {
                 <Row>
                     <Col xs="8"></Col>
                     <Col>
-                          <Button onClick={()=>setVista(2)} disabled={(opciones==0 || opEncuesta ==0 )} >Siguiente</Button>
+                          {(!opciones==0 && !opEncuesta ==0 ) && <Button onClick={()=>setVista(2)} >Siguiente</Button> }
                     </Col>
                 </Row>
                 </>
@@ -77,6 +77,9 @@ const EncuestaEstrellas = ({idViaje}) => {
     }
     return (
         <Container fluid style={{marginTop:"3em",justifyContent: "center",backgroundColor:'white'}}>
+            <Row style={{justifyContent:"center"}}>
+                <Col>¿Cómo te fue con el retiro? Ayudanos a mejorar el servicio o deja tus comentarios positivos</Col>
+            </Row>
             <Row style={{justifyContent:"center"}}>
                 <Col></Col>
                 <Col style={{justifyContent:"center"}}>

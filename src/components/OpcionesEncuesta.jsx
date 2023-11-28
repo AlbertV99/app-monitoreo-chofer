@@ -7,6 +7,7 @@ const OpcionesEncuesta = ({ numero, onBotonSeleccionado , opSel }) => {
     const [botones, setBotones] = useState([]);
     const [opSeleccionado, setOpSeleccionado] = useState("0")
     const {obtenerDatos} = Peticiones();
+    const [titulo,setTitulo] = useState("");
 
     useEffect(() => {
         // Función para obtener datos desde el servidor
@@ -17,6 +18,7 @@ const OpcionesEncuesta = ({ numero, onBotonSeleccionado , opSel }) => {
                 // Realizar la solicitud al servidor con el número
                 // const respuesta = await fetch(`http://localhost/rastreo/opciones_encuesta/Parametros/consultaValores.php?tipo=app`);
                 const datos = await obtenerDatos("/opciones_encuesta/Parametros/consultaValores.php?tipo=app")
+                setTitulo(numero < 4 ? "Lo sentimos, cuéntanos que salió mal." : "¡Perfecto!, cuéntanos qué te gusto")
                 const tipo = (numero <4 ? "MALO":"BUENO")
                 let dataCond = datos.datos.filter((elemento)=>elemento.tipo == tipo)
                 // Actualizar el estado con los botones obtenidos del servidor
@@ -39,6 +41,9 @@ const OpcionesEncuesta = ({ numero, onBotonSeleccionado , opSel }) => {
     }
     return (
         <Container style={{gridGap:"1em",display:"grid"}}>
+            <Row>
+                <Col>{titulo}</Col>
+            </Row>
         {botones.map((boton, index) => (
             <Row key={"R-"+index}>
                 <Col xs={1}></Col>
