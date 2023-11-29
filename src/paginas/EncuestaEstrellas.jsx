@@ -1,13 +1,19 @@
 import React,{useState} from 'react'
 import PropTypes from 'prop-types'
 import {Container,Row,Col,Button,ButtonGroup,ToggleButton,Form,Pagination,FloatingLabel} from 'react-bootstrap';
+import {useNavigate,NavLink} from "react-router-dom"
 import OpcionesEncuesta from '../components/OpcionesEncuesta'
 import Peticiones from '../helpers/peticiones.js'
+import LocalBD from '../helpers/localBd.js'
 import Estrella from '../assets/estrella.png'
 import EstrellaColor from '../assets/estrellaColor.png'
 import '../assets/css/Encuesta.css'
 
-const EncuestaEstrellas = ({idViaje}) => {
+const EncuestaEstrellas = ({idViaje,setEncuesta}) => {
+    const {obtenerViaje} = LocalBD();
+
+    const navg = useNavigate()
+
     const {guardarNuevoJson} = Peticiones();
     const [opciones,setOpciones] = useState(0);
     const [opEncuesta,setOpEncuesta] = useState(0);
@@ -15,13 +21,16 @@ const EncuestaEstrellas = ({idViaje}) => {
     const [vista,setVista] = useState(1);
 
     const enviarEncuesta = async ()=>{
+        let viaje = obtenerViaje()
+        viaje = JSON.parse(viaje);
         const encuesta = {
-            "id_viaje":idViaje,
+            "id_viaje":viaje.id,
             "puntuacion":opciones,
             "opcion_seleccionada":opEncuesta,
             "observacion":observ
         }
         let temp = await guardarNuevoJson(`/rpta_encuesta/Parametros/ABMForm.php?opcion=N`,encuesta)
+        navg("/viajeMov")
         console.log(temp)
     }
 

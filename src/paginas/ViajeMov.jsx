@@ -44,6 +44,7 @@ const ViajeMov = (props) => {
                 "- No bloquee el Celular \n"+
                 "- Maneje con cuidado"
               )
+
         }
     }, []);
 

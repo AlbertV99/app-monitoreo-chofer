@@ -102,7 +102,7 @@ const ViajeReg = (props) => {
                 setMsg("Error a la hora de registrar viaje")
                 estadoEnvio(true)
             }else{
-                navg("/viajeMov")
+                navg("/encuesta")
                 setMsg("Registrado correctamente")
             }
         }else{

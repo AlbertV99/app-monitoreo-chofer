@@ -18,7 +18,9 @@ const OpcionesEncuesta = ({ numero, onBotonSeleccionado , opSel }) => {
                 // Realizar la solicitud al servidor con el número
                 // const respuesta = await fetch(`http://localhost/rastreo/opciones_encuesta/Parametros/consultaValores.php?tipo=app`);
                 const datos = await obtenerDatos("/opciones_encuesta/Parametros/consultaValores.php?tipo=app")
-                setTitulo(numero < 4 ? "Lo sentimos, cuéntanos que salió mal." : "¡Perfecto!, cuéntanos qué te gusto")
+                if(numero !=0){
+                    setTitulo(numero < 4 ? "Lo sentimos, cuéntanos que salió mal." : "¡Perfecto!, cuéntanos qué te gusto")
+                }
                 const tipo = (numero <4 ? "MALO":"BUENO")
                 let dataCond = datos.datos.filter((elemento)=>elemento.tipo == tipo)
                 // Actualizar el estado con los botones obtenidos del servidor
