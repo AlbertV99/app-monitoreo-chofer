@@ -8,7 +8,7 @@ import LocalBD from '../helpers/localBd.js'
 import LogoPararViaje from '../assets/senal-de-stop.png'
 import '../assets/css/BotonViaje.css'
 import { BiUserCircle } from "react-icons/bi";
-
+import {useNavigate,NavLink} from "react-router-dom"
 
 const ViajeMov = (props) => {
     const [datos, setDatos] = useState([]);
@@ -24,6 +24,7 @@ const ViajeMov = (props) => {
     const [intervaloW,setIntervaloW] = useState(null);
     const [estadoEncuesta,setEstadoEncuesta] = useState(true)
     let datoViajeBK = {"lat":"", "lon":"", "id_viaje": ""};
+    const navg = useNavigate()
     const TIEMPO_INTERVALOS = 60000;
     // const [,,,,,,endpointLibre,obtenerPersona,registrarMarcacion,obtenerHistorial] = Peticiones();
 
@@ -86,12 +87,13 @@ const ViajeMov = (props) => {
             clearInterval(intervalo)
             setIntervalo(null);
 
+
         }
         setPulso(!pulsar);
-
-
-       setEstadoViaje(!estadoViaje)
-
+        setEstadoViaje(!estadoViaje)
+        if(!estadoViaje){
+            pararViaje();
+        }
 
     }
 
