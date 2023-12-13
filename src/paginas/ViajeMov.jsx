@@ -137,6 +137,7 @@ const ViajeMov = (props) => {
         // guardarNuevoJson("/posicion/Parametros/ABMForm.php",datoForm);
         guardarNuevoJson("/viaje/Parametros/ABMForm2.php?opcion=N",datoForm);
         // Envía la foto y los datos al servidor utilizando fetch
+        navg("/encuesta")
 
     }
 

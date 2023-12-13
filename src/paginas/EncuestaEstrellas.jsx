@@ -30,7 +30,7 @@ const EncuestaEstrellas = ({idViaje,setEncuesta}) => {
             "observacion":observ
         }
         let temp = await guardarNuevoJson(`/rpta_encuesta/Parametros/ABMForm.php?opcion=N`,encuesta)
-        navg("/viajeMov")
+        navg("/viajeReg")
         console.log(temp)
     }
 
