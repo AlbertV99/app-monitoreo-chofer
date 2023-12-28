@@ -10,6 +10,7 @@ import PerfilChofer from './paginas/PerfilChofer'
 import RegistroMovil from './paginas/RegistroMovil'
 import CargarHora from './paginas/CargarHora'
 import Historial from './paginas/Historial'
+import EncuestaEstrellas from './paginas/EncuestaEstrellas'
 import './index.css'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
@@ -20,6 +21,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
                 <Route  path='viajeMov' element={<ViajeMov/>} />
                 <Route  path='viajeReg' element={<ViajeReg/>} />
                 <Route  path='perfil' element={<PerfilChofer/>} />
+                <Route  path='encuesta' element={<EncuestaEstrellas/>} />
                 <Route  path='regChofer' element={<RegistroChofer/>} />
                 <Route  path='regMovil' element={<RegistroMovil/>} />
                 <Route  path='cargarHora' element={<CargarHora/>} />

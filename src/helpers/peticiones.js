@@ -25,6 +25,15 @@ const Peticiones = () => {
         // setCarga(false)
     }
 
+    const obtenerDatos = async (modulo) => {
+        const url = BASE + modulo ;
+        console.log(url)
+        const temp = await fetch(url)
+        const data = await temp.json()
+        console.log(data,"<-datos")
+        return data
+    }
+
     const obtenerUnicoRegistro = async (modulo,id) =>{
         // setCarga(true)
         // IDEA: Cambiar por constante de ambiente
@@ -184,7 +193,8 @@ const Peticiones = () => {
         "obtenerPersona":obtenerPersona,
         "registrarMarcacion":registrarMarcacion,
         "obtenerHistorial":obtenerHistorial,
-        "obtenerPersonales":obtenerPersonales
+        "obtenerPersonales":obtenerPersonales,
+        "obtenerDatos":obtenerDatos
     }
 }
 

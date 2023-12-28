@@ -26,7 +26,7 @@ const MenuInferior = (props) => {
                 </Col>
                 <Col xs={8} style={{padding:'0px',textAlign:'right'}}>
                     <p style={{fontSize:'8pt',color:'#a2a4a6',margin:'3px 0px'}}>
-                        Desarrollado por Valurq S.R.L.<span style={{fontWeight:"bold",color:'black'}}> (V.10-Alfa)</span>
+                        Desarrollado por Valurq S.R.L.<span style={{fontWeight:"bold",color:'black'}}> (V.2-BetaDesa)</span>
                     </p>
                 </Col>
             </Row>

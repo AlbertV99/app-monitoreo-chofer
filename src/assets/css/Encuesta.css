@@ -1,0 +1,29 @@
+.Estrella{
+    width: 2em;
+    height: 2em;
+}
+
+.opcionEstrella{
+    border-color:white;
+    border-right-color:white;
+}
+.opcionEstrella:hover{
+    border-color:white !important;
+    border-right-color:white !important;
+}
+
+.opcionEstrellaIzq{
+    border-color:white;
+}
+
+.opcionEstrellaIzq:hover{
+    border-color:white !important;
+}
+
+.opcionEstrellaDer{
+    border-color:white;
+}
+
+.opcionEstrellaDer:hover{
+    border-color:white !important;
+}
