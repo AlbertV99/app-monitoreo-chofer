@@ -24,7 +24,7 @@ const ViajeReg = (props) => {
     const [clienteSelec,setClienteSelec] = useState("");
     const [listaCliente,setListaCliente] = useState([{ 'label': "A S D SRL", 'value': '1' }]);
     const [destinoSelec,setDestinoSelec] = useState("");
-    const [listaDestino,setListaDestino] = useState([{ 'label': "Jauser", 'value': 'Jauser' },{ 'label': "Planta", 'value': 'Planta' },{ 'label': "Central", 'value': 'Central' }]);
+    const [listaDestino,setListaDestino] = useState([{ 'label': "Jauser", 'value': 'Jauser' },{ 'label': "Planta", 'value': 'Planta' }]);
     const [estadoEnvio,setEstadoEnvio] = useState(true)
     const [datoForm,setDatoForm] = useState({"id_chofer":1,"id_movil":"","id_cliente":"","destino":"","dt":"","fecha_fin":"","hora_fin":""});
     // const [,,,,,,endpointLibre,obtenerPersona,registrarMarcacion,obtenerHistorial] = Peticiones();
