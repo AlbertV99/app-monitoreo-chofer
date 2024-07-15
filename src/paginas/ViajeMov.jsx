@@ -25,7 +25,7 @@ const ViajeMov = (props) => {
     const [estadoEncuesta,setEstadoEncuesta] = useState(true)
     let datoViajeBK = {"lat":"", "lon":"", "id_viaje": ""};
     const navg = useNavigate()
-    const TIEMPO_INTERVALOS = 60000;
+    const TIEMPO_INTERVALOS = 1200000;
     // const [,,,,,,endpointLibre,obtenerPersona,registrarMarcacion,obtenerHistorial] = Peticiones();
 
     const {endpointLibre,obtenerPersona,registrarMarcacion,obtenerHistorial,guardarNuevoJson} = Peticiones();
